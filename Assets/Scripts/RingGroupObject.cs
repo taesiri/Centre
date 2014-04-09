@@ -8,6 +8,8 @@ namespace Assets.Scripts
         public RingGroupObject NextGroup;
         public RingGroupObject PrevGroup;
 
+        public CellObject CentreCell;
+
         public CellObject[] CellChilds;
 
         public float RotationSpeed = 200f;
@@ -18,6 +20,7 @@ namespace Assets.Scripts
         private CellObject _rotatingCell;
         private Action<CellObject> _finishAction;
 
+        public int GroupIndex;
 
         public enum MovementType
         {
@@ -61,6 +64,13 @@ namespace Assets.Scripts
                     if (targetCell)
                     {
                         cell.CustomMove(targetCell);
+                    }
+                }
+                else
+                {
+                    if (GroupIndex == 1)
+                    {
+                        cell.CustomMove(CentreCell);
                     }
                 }
             }

@@ -33,13 +33,5 @@ namespace Assets.Editor
                 bcolider.size = _cellColiderSize;
             }
         }
-
-        private Vector3 GetColiderSize()
-        {
-            var currentObject = (RingGroupObject) target;
-
-            return
-                currentObject.CellChilds[0].GetComponent<BoxCollider>().size;
-        }
     }
 }

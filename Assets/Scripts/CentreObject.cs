@@ -5,6 +5,8 @@ namespace Assets.Scripts
     public class CentreObject : MonoBehaviour
     {
         public GameObject CellElementPrefab;
+        public GameObject CEntreObjectPrefab;
+
         public Transform CentreTransfrom;
         public float Radius = 10;
         public int NumberOfSubnNodesInRingGroup = 6;
