@@ -1,15 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Centre : MonoBehaviour {
+namespace Assets.Scripts
+{
+    public class Centre : MonoBehaviour
+    {
+        public GameObject GameCellPrefab;
+        public GameObject SourcePrefab;
+        public List<SourceObject> Sources;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        private void Start()
+        {
+        }
+
+        private void Update()
+        {
+        }
+    }
 }
