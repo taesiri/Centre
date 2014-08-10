@@ -106,8 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentCentre: {fileID: 1844657983}
   GameCellPrefab: {fileID: 100000, guid: 5e010b65b4baecd40ad7e300656bb632, type: 2}
-  ObjectCount: 36
+  ObjectCount: 10
   Inverted: 0
+  Speed: 40
 --- !u!4 &97451666
 Transform:
   m_ObjectHideFlags: 0
@@ -203,8 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentCentre: {fileID: 1844657983}
   GameCellPrefab: {fileID: 100000, guid: 5e010b65b4baecd40ad7e300656bb632, type: 2}
-  ObjectCount: 32
+  ObjectCount: 10
   Inverted: 0
+  Speed: 20
 --- !u!23 &534870133
 Renderer:
   m_ObjectHideFlags: 0
@@ -642,8 +644,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentCentre: {fileID: 1844657983}
   GameCellPrefab: {fileID: 100000, guid: 5e010b65b4baecd40ad7e300656bb632, type: 2}
-  ObjectCount: 40
+  ObjectCount: 8
   Inverted: 1
+  Speed: 50
 --- !u!4 &2050117840
 Transform:
   m_ObjectHideFlags: 0

@@ -62,7 +62,6 @@ namespace Assets.Editor
 
             var newSourceObj = (GameObject) Instantiate(ctr.SourcePrefab, new Vector3(2, 0, 2), Quaternion.identity);
             var newSource = newSourceObj.GetComponent<SourceObject>();
-            newSource.ParentCentre = ctr;
             newSource.GameCellPrefab = ctr.GameCellPrefab;
             ctr.Sources.Add(newSource);
             newSourceObj.transform.parent = ctr.transform;

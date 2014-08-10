@@ -9,12 +9,11 @@ namespace Assets.Scripts
         public GameObject SourcePrefab;
         public List<SourceObject> Sources;
 
-        private void Start()
-        {
-        }
+        public static Centre Instance;
 
-        private void Update()
+        public void Start()
         {
+            Instance = this;
         }
     }
 }
