@@ -6,6 +6,7 @@ namespace Assets.Scripts
     {
         public float Speed = 50.0f;
         public Vector3 Origin = Vector3.zero;
+        public TextMesh InnerTextMesh;
 
         private void Update()
         {

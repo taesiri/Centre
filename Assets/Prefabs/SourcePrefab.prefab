@@ -43,7 +43,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f12a25e0f7f0a0745861dfe5e65dbafa, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -81,6 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c02817640917164c9f402ef30ab03ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameCellPrefab: {fileID: 0}
+  ObjectCount: 10
+  Inverted: 0
+  Speed: 10
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -8,6 +8,7 @@ namespace Assets.Editor
     [CustomEditor(typeof (SourceObject))]
     public class SourceObjectEditor : UnityEditor.Editor
     {
+       
         public void OnSceneGUI()
         {
             var sourceObject = (SourceObject) target;
