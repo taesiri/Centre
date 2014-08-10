@@ -109,6 +109,7 @@ MonoBehaviour:
   Inverted: 0
   Speed: 10
   Angle: 270
+  RingId: -1
 --- !u!23 &64222514
 Renderer:
   m_ObjectHideFlags: 0
@@ -186,9 +187,9 @@ Light:
   serializedVersion: 3
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 4.73999977
+  m_Intensity: 2.82999992
   m_Range: 15.9251671
-  m_SpotAngle: 114.543747
+  m_SpotAngle: 139
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -316,7 +317,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1376783492}
   - 33: {fileID: 1376783491}
-  - 64: {fileID: 1376783490}
   - 23: {fileID: 1376783489}
   m_Layer: 0
   m_Name: Game Board
@@ -345,19 +345,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!64 &1376783490
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1376783488}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &1376783491
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -475,7 +462,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1542150388}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.44194841, y: 0, z: -3.113904}
+  m_LocalPosition: {x: -1.43740511, y: 0, z: -3.68372631}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1844657984}
@@ -496,6 +483,7 @@ MonoBehaviour:
   Inverted: 1
   Speed: 15
   Angle: 360
+  RingId: -1
 --- !u!23 &1542150391
 Renderer:
   m_ObjectHideFlags: 0
@@ -543,6 +531,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1844657984}
+  - 135: {fileID: 1844657987}
   - 114: {fileID: 1844657983}
   - 33: {fileID: 1844657986}
   - 23: {fileID: 1844657985}
@@ -570,6 +559,7 @@ MonoBehaviour:
   Sources:
   - {fileID: 0}
   - {fileID: 0}
+  SourceList: []
 --- !u!4 &1844657984
 Transform:
   m_ObjectHideFlags: 0
@@ -612,6 +602,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1844657982}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &1844657987
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1844657982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .500000119
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!1 &1954024474
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +661,7 @@ MonoBehaviour:
   Inverted: 0
   Speed: 20
   Angle: 180
+  RingId: -1
 --- !u!23 &1954024477
 Renderer:
   m_ObjectHideFlags: 0
