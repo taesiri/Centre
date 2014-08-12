@@ -110,6 +110,7 @@ MonoBehaviour:
   Speed: 10
   Angle: 270
   RingId: -1
+  ListofCells: []
 --- !u!23 &64222514
 Renderer:
   m_ObjectHideFlags: 0
@@ -484,6 +485,7 @@ MonoBehaviour:
   Speed: 15
   Angle: 360
   RingId: -1
+  ListofCells: []
 --- !u!23 &1542150391
 Renderer:
   m_ObjectHideFlags: 0
@@ -531,9 +533,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1844657984}
-  - 135: {fileID: 1844657987}
   - 114: {fileID: 1844657983}
   - 33: {fileID: 1844657986}
+  - 135: {fileID: 1844657987}
   - 23: {fileID: 1844657985}
   m_Layer: 0
   m_Name: Centre
@@ -609,7 +611,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1844657982}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .500000119
@@ -662,6 +664,7 @@ MonoBehaviour:
   Speed: 20
   Angle: 180
   RingId: -1
+  ListofCells: []
 --- !u!23 &1954024477
 Renderer:
   m_ObjectHideFlags: 0

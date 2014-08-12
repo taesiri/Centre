@@ -39,24 +39,50 @@ namespace Assets.Scripts
 
             if (Parent.RingId == 1)
             {
-                return;
+                return; // CENTER
             }
-            RaycastHit rayHit;
-            Physics.Raycast(_transform.position, Origin - _transform.position, out rayHit, Parent.GetRadius, 1 << (Parent.RingId + 6));
-            if (rayHit.collider)
-            {
-                Debug.Log(rayHit.collider.gameObject.name);
-                rayHit.collider.renderer.material.color = Color.red;
-            }
+
+            RayCheck(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 6));
         }
 
         public void CheckBackward()
         {
+            if (Parent.RingId == 1)
+            {
+                return; // CENTER
+            }
+
+            RayCheck(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 8));
+        }
+
+        public void RayCheck(Ray ray, int mask)
+        {
+            RaycastHit rayHit;
+            Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
+            if (rayHit.collider)
+            {
+                var otherCell = rayHit.collider.GetComponent<GameCellObject>();
+                if (otherCell)
+                {
+                    if (otherCell.CellValue == 0)
+                    {
+                        otherCell.SetValue(CellValue);
+                        ClearCell();
+                        Centre.Instance.GenerateNumber();
+                    }
+                    else if (otherCell.CellValue == CellValue)
+                    {
+                        otherCell.Promote();
+                        ClearCell();
+                        Centre.Instance.GenerateNumber();
+                    }
+                }
+            }
         }
 
         public void Promote()
         {
-            CellValue *= 2;
+            SetValue(CellValue*2);
         }
 
         public void ClearCell()

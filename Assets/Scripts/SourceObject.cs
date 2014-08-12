@@ -79,13 +79,44 @@ namespace Assets.Scripts
             }
         }
 
-        public void RespawnRandomValue()
-        {
-            var listofFrees = ListofCells.Where(o => o.IsFree()).ToList();
-            var index = Centre.Instance.RndGenerator.Next(0, listofFrees.Count);
-            var power = Centre.Instance.RndGenerator.Next(0, 2);
 
-            listofFrees[index].SetValue((int) Math.Pow(2.0, power));
+        private int _rCounter = -1;
+
+        public int GetRandomValue
+        {
+            get { return _rCounter%2 + 1; }
+        }
+
+        public void RespawnRandomValue(int amount)
+        {
+            if (amount <= 0)
+                Debug.LogError("Wrong Value! Vairable \'amount\' should be 1 at least!");
+
+            var listofFrees = ListofCells.Where(o => o.IsFree()).ToList();
+            var n = listofFrees.Count;
+
+            _rCounter++;
+
+            if (n == 0)
+            {
+                return;
+            }
+            if (n < amount)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    listofFrees[i].SetValue(GetRandomValue);
+                }
+                return;
+            }
+
+
+            for (int i = 0; i < amount; i++)
+            {
+                // Possible duplication!
+                var index = Centre.Instance.RndGenerator.Next(0, n);
+                listofFrees[index].SetValue(GetRandomValue);
+            }
         }
     }
 }

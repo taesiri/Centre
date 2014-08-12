@@ -13,8 +13,12 @@ namespace Assets.Scripts
         public List<SourceObject> Sources;
         public static Centre Instance;
         public List<SourceObject> SourceList;
-        
         public Random RndGenerator = new Random(DateTime.Now.Millisecond);
+        private int _initialValueCycles = 4;
+
+        private int _rCounter = 0;
+        private int _ishit = -1;
+        private GameCellObject _lastHitCellObject;
 
         public Centre()
         {
@@ -34,8 +38,21 @@ namespace Assets.Scripts
             {
                 SourceList[i].ReceiveId(i + 1);
             }
+
+            StartCoroutine(InitialValues());
         }
 
+        private IEnumerator InitialValues()
+        {
+            while (_initialValueCycles > 0)
+            {
+                Time.timeScale = 2f;
+                yield return new WaitForSeconds(3f);
+                GenerateNumber();
+                _initialValueCycles--;
+            }
+            Time.timeScale = 1f;
+        }
 
         public void RegisterRing(SourceObject src)
         {
@@ -47,11 +64,22 @@ namespace Assets.Scripts
             HandleInputs();
         }
 
+
         private void HandleInputs()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                _ishit = 0;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                _ishit = 1;
+            }
+
+
+            if (_ishit != -1)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit rayHit;
                 Physics.Raycast(ray, out rayHit, 400f);
                 if (rayHit.collider)
@@ -59,25 +87,40 @@ namespace Assets.Scripts
                     var cellObject = rayHit.collider.GetComponent<GameCellObject>();
                     if (cellObject)
                     {
-                        cellObject.CheckForward();
+                        _lastHitCellObject = cellObject;
+                        Time.timeScale = .5f;
                     }
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
+
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
             {
-                GenerateNumber();
+                if (_lastHitCellObject != null)
+                {
+                    if (_ishit == 0)
+                    {
+                        _lastHitCellObject.CheckForward();
+                    }
+                    else if (_ishit == 1)
+                    {
+                        _lastHitCellObject.CheckBackward();
+                    }
+                }
+
+                Time.timeScale = 1;
+                _lastHitCellObject = null;
+
+
+                _ishit = -1;
             }
         }
 
-
         public void GenerateNumber()
         {
-            Debug.Log(SourceList[2].NumberOfFreeCells());
-            if (SourceList[2].NumberOfFreeCells() != 0)
-            {
-                SourceList[2].RespawnRandomValue();
-            }
+            SourceList[2 - _rCounter%3].RespawnRandomValue(3 - (_rCounter%3));
+
+            _rCounter++;
         }
     }
 }
