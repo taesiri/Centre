@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -36,7 +35,6 @@ namespace Assets.Scripts
             StartCoroutine(DeployObject());
             _waitForDesireFrame = Angle/(ObjectCount*Speed);
 
-            Centre.Instance.RegisterRing(this);
             ListofCells = new List<GameCellObject>(ObjectCount);
         }
 
@@ -61,7 +59,7 @@ namespace Assets.Scripts
                 }
 
                 var gCell = (GameObject) Instantiate(GameCellPrefab, transform.position, Quaternion.identity);
-                gCell.layer = 7 + RingId;
+                gCell.layer = 8 + RingId;
                 gCell.transform.parent = transform;
 
                 var gco = gCell.GetComponent<GameCellObject>();

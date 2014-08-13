@@ -9,8 +9,8 @@ namespace Assets.Scripts
         public TextMesh InnerTextMesh;
         private Transform _transform;
         public int CellValue = 0;
-
         public SourceObject Parent;
+        public bool IsCentre = false;
 
         public void Start()
         {
@@ -36,45 +36,39 @@ namespace Assets.Scripts
         public void CheckForward()
         {
             Debug.DrawLine(_transform.position, Origin, Color.red, 2f, true);
-
-            if (Parent.RingId == 1)
-            {
-                return; // CENTER
-            }
-
-            RayCheck(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 6));
+            RayCheck(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 7));
         }
 
         public void CheckBackward()
         {
-            if (Parent.RingId == 1)
-            {
-                return; // CENTER
-            }
-
-            RayCheck(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 8));
+            RayCheck(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9));
         }
 
         public void RayCheck(Ray ray, int mask)
         {
-            RaycastHit rayHit;
-            Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
-            if (rayHit.collider)
+            if (!IsCentre)
             {
-                var otherCell = rayHit.collider.GetComponent<GameCellObject>();
-                if (otherCell)
+                RaycastHit rayHit;
+                Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
+
+
+                if (rayHit.collider)
                 {
-                    if (otherCell.CellValue == 0)
+                    var otherCell = rayHit.collider.GetComponent<GameCellObject>();
+                    if (otherCell)
                     {
-                        otherCell.SetValue(CellValue);
-                        ClearCell();
-                        Centre.Instance.GenerateNumber();
-                    }
-                    else if (otherCell.CellValue == CellValue)
-                    {
-                        otherCell.Promote();
-                        ClearCell();
-                        Centre.Instance.GenerateNumber();
+                        if (otherCell.CellValue == 0)
+                        {
+                            otherCell.SetValue(CellValue);
+                            ClearCell();
+                            Centre.Instance.GenerateNumber();
+                        }
+                        else if (otherCell.CellValue == CellValue)
+                        {
+                            otherCell.Promote();
+                            ClearCell();
+                            Centre.Instance.GenerateNumber();
+                        }
                     }
                 }
             }
@@ -83,6 +77,10 @@ namespace Assets.Scripts
         public void Promote()
         {
             SetValue(CellValue*2);
+            if (IsCentre)
+            {
+                Centre.Instance.Colorize(CellValue);
+            }
         }
 
         public void ClearCell()
@@ -101,7 +99,7 @@ namespace Assets.Scripts
 
             CellValue = newValue;
             InnerTextMesh.renderer.enabled = true;
-            InnerTextMesh.text = newValue.ToString();
+            InnerTextMesh.text = string.Format(" {0} ", newValue);
         }
 
         public bool IsFree()
