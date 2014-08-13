@@ -18,6 +18,8 @@ namespace Assets.Scripts
         public int RingId = -1;
         public List<AdvanceGameCell> ListofCells;
 
+        private Transform _sourceCentreTransform;
+
         public float GetRadius
         {
             get
@@ -33,9 +35,13 @@ namespace Assets.Scripts
         {
             renderer.enabled = false;
             StartCoroutine(DeployObject());
-            _waitForDesireFrame = Angle / (ObjectCount * Speed);
+            _waitForDesireFrame = Angle/(ObjectCount*Speed);
 
             ListofCells = new List<AdvanceGameCell>(ObjectCount);
+
+            var sc = new GameObject(gameObject.name + " Source Centre");
+            sc.transform.position = Vector3.zero;
+            _sourceCentreTransform = sc.transform;
         }
 
         public int NumberOfFreeCells()
@@ -58,9 +64,9 @@ namespace Assets.Scripts
                     Debug.LogError("wrong id!");
                 }
 
-                var gCell = (GameObject)Instantiate(GameCellPrefab, transform.position, Quaternion.identity);
+                var gCell = (GameObject) Instantiate(GameCellPrefab, transform.position, Quaternion.identity);
                 gCell.layer = 8 + RingId;
-                gCell.transform.parent = transform;
+                gCell.transform.parent = _sourceCentreTransform;
 
                 var gco = gCell.GetComponent<AdvanceGameCell>();
                 gco.Speed = Inverted ? -Speed : Speed;
@@ -82,7 +88,7 @@ namespace Assets.Scripts
 
         public int GetRandomValue
         {
-            get { return _rCounter % 2 + 1; }
+            get { return _rCounter%2 + 1; }
         }
 
         public void RespawnRandomValue(int amount)

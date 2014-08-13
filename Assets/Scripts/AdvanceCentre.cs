@@ -22,14 +22,16 @@ namespace Assets.Scripts
         private bool _isReady;
         public AnimationCurve ColorCurve;
 
+        public bool AllowCameraMovement;
+
         public AdvanceCentre()
         {
             Instance = this;
         }
-            
+
         public void AssignRingIds()
         {
-            var sourcesArray = (AdvanceSourceObject[])FindObjectsOfType(typeof(AdvanceSourceObject));
+            var sourcesArray = (AdvanceSourceObject[]) FindObjectsOfType(typeof (AdvanceSourceObject));
             SourceList = sourcesArray.ToList();
             SourceList.Sort((p1, p2) => p1.GetRadius.CompareTo(p2.GetRadius));
             for (int i = 0; i < SourceList.Count; i++)
@@ -96,6 +98,14 @@ namespace Assets.Scripts
                             _ishit = -1;
                         }
                     }
+                    else
+                    {
+                        AllowCameraMovement = _ishit == 1;
+                    }
+                }
+                else
+                {
+                    AllowCameraMovement = _ishit == 1;
                 }
             }
 
@@ -118,6 +128,7 @@ namespace Assets.Scripts
 
 
                 _ishit = -1;
+                AllowCameraMovement = false;
             }
         }
 
@@ -131,7 +142,6 @@ namespace Assets.Scripts
 
         public void Colorize(int value)
         {
-         
         }
     }
 }

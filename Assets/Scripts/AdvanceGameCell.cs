@@ -10,10 +10,13 @@ namespace Assets.Scripts
         public int CellValue = 0;
         public AdvanceSourceObject Parent;
         public bool IsCentre = false;
+        private Transform _parenTransform;
+
 
         public void Start()
         {
             _transform = transform;
+            _parenTransform = transform.parent;
         }
 
         private void Update()
@@ -24,7 +27,7 @@ namespace Assets.Scripts
 
         public void HandleRotation()
         {
-            _transform.RotateAround(Origin, Vector3.up, Speed * Time.deltaTime);
+            _transform.RotateAround(Origin, _parenTransform.up, Speed*Time.deltaTime);
         }
 
         public void DrawDebugInformation()
@@ -75,7 +78,7 @@ namespace Assets.Scripts
 
         public void Promote()
         {
-            SetValue(CellValue * 2);
+            SetValue(CellValue*2);
             if (IsCentre)
             {
                 AdvanceCentre.Instance.Colorize(CellValue);
