@@ -18,6 +18,8 @@ namespace Assets.Scripts
         public int RingId = -1;
         public List<GameCellObject> ListofCells;
 
+        public GameObject TrailerPrefab;
+
         public float GetRadius
         {
             get
@@ -33,8 +35,14 @@ namespace Assets.Scripts
         {
             renderer.enabled = false;
             StartCoroutine(DeployObject());
-            _waitForDesireFrame = Angle/(ObjectCount*Speed);
 
+
+            var trailerObject = (GameObject) Instantiate(TrailerPrefab, transform.position, Quaternion.identity);
+            var trailer = trailerObject.GetComponent<GameCellObject>();
+            trailer.Speed = Inverted ? -8*Speed : 8*Speed;
+
+
+            _waitForDesireFrame = Angle/(ObjectCount*Speed);
             ListofCells = new List<GameCellObject>(ObjectCount);
         }
 
