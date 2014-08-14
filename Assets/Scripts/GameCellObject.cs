@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -8,9 +9,12 @@ namespace Assets.Scripts
         public Vector3 Origin = Vector3.zero;
         public TextMesh InnerTextMesh;
         private Transform _transform;
-        public int CellValue = 0;
         public SourceObject Parent;
         public bool IsCentre = false;
+        public int CellValue = 0;
+        public Transform GhostTransform;
+
+        private List<GameCellObject> _possibleDestinations = new List<GameCellObject>();
 
         public void Start()
         {
@@ -44,13 +48,65 @@ namespace Assets.Scripts
             RayCheck(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9));
         }
 
+        public GameCellObject GetVicinity(int index)
+        {
+            return new GameCellObject();
+        }
+
+        public GameCellObject GetCellAtFront()
+        {
+            return GetCellAlongRay(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 7));
+        }
+
+        public GameCellObject GetCellAtBack()
+        {
+            return GetCellAlongRay(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9));
+        }
+
+
+        private void FindDestinations()
+        {
+            // TODO : Check visinities, forward and backward! :-)
+
+            _possibleDestinations = new List<GameCellObject>();
+
+            var back = GetCellAtBack();
+            if (back)
+                _possibleDestinations.Add(back);
+
+            var front = GetCellAtFront();
+            if (front)
+                _possibleDestinations.Add(front);
+
+
+        }
+
+
+        public void HighlightDestinations()
+        {
+            FindDestinations();
+
+
+            foreach (var destination in _possibleDestinations)
+            {
+                destination.GhostTransformVisibility(true);
+            }
+        }
+
+        public void UnHighlightDestinations()
+        {
+            foreach (var destination in _possibleDestinations)
+            {
+                destination.GhostTransformVisibility(false);
+            }
+        }
+
         public void RayCheck(Ray ray, int mask)
         {
             if (!IsCentre)
             {
                 RaycastHit rayHit;
                 Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
-
 
                 if (rayHit.collider)
                 {
@@ -72,6 +128,22 @@ namespace Assets.Scripts
                     }
                 }
             }
+        }
+
+        public GameCellObject GetCellAlongRay(Ray ray, int mask)
+        {
+            RaycastHit rayHit;
+            Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
+
+            if (rayHit.collider)
+            {
+                var otherCell = rayHit.collider.GetComponent<GameCellObject>();
+                if (otherCell)
+                {
+                    return otherCell;
+                }
+            }
+            return null;
         }
 
         public void Promote()
@@ -105,6 +177,11 @@ namespace Assets.Scripts
         public bool IsFree()
         {
             return CellValue == 0;
+        }
+
+        public void GhostTransformVisibility(bool value)
+        {
+            GhostTransform.renderer.enabled = value;
         }
     }
 }

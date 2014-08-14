@@ -20,6 +20,7 @@ namespace Assets.Scripts
 
         public GameObject TrailerPrefab;
 
+
         public float GetRadius
         {
             get

@@ -1,4 +1,4 @@
-﻿Shader "Custom/Basic Outline" {
+﻿Shader "Basic Outline" {
     Properties {
         _Color ("Main Color", Color) = (.5,.5,.5,1)
         _OutlineColor ("Outline Color", Color) = (1,0.5,0,1)
@@ -10,7 +10,6 @@
         Pass {
             Name "OUTLINE"
             Tags { "LightMode" = "Always" }
-
 CGPROGRAM
 // Upgrade NOTE: excluded shader from DX11 and Xbox360; has structs without semantics (struct appdata members vertex,normal)
 #pragma exclude_renderers d3d11 xbox360

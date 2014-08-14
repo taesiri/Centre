@@ -22,6 +22,7 @@ namespace Assets.Scripts
         private bool _isReady;
         public GameObject GameBoard;
         public AnimationCurve ColorCurve;
+        public LineDrawer LineDrawer;
 
         public Centre()
         {
@@ -67,19 +68,16 @@ namespace Assets.Scripts
             GameBoard.renderer.material.SetColor("_SpecColor", new Color(ColorCurve.Evaluate(Time.time*0.1f), 1f, 0));
         }
 
-        private void HandleInputs()
+
+        private bool _lMouseDown;
+
+        private void HandleInputsPropper()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _ishit = 0;
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                _ishit = 1;
-            }
+                _lMouseDown = true;
 
-            if (_ishit != -1)
-            {
+
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit rayHit;
                 Physics.Raycast(ray, out rayHit, 400f);
@@ -91,6 +89,115 @@ namespace Assets.Scripts
                         if (!cellObject.IsCentre)
                         {
                             _lastHitCellObject = cellObject;
+                            cellObject.GhostTransformVisibility(true);
+                            cellObject.HighlightDestinations();
+
+                            var lineStartVec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            lineStartVec.y = 0f;
+
+                            LineDrawer.UpdatePosition(0, lineStartVec);
+                            LineDrawer.UpdatePosition(1, lineStartVec);
+
+                            Time.timeScale = .45f;
+                        }
+                    }
+                }
+            }
+
+            if (_lMouseDown)
+            {
+                var lineEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                lineEnd.y = 0f;
+
+                if (_lastHitCellObject)
+                    LineDrawer.UpdatePosition(0, _lastHitCellObject.transform.position);
+
+                LineDrawer.UpdatePosition(1, lineEnd);
+
+
+                //    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //    RaycastHit rayHit;
+                //    Physics.Raycast(ray, out rayHit, 400f);
+                //    if (rayHit.collider)
+                //    {
+                //        var cellObject = rayHit.collider.GetComponent<GameCellObject>();
+                //        if (cellObject)
+                //        {
+                //            if (!cellObject.IsCentre)
+                //            {
+
+                //                var lineStartVec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                //                lineStartVec.y = 10f;
+
+                //                LineDrawer.UpdatePosition(0, lineStartVec);
+                //                LineDrawer.UpdatePosition(1, lineStartVec);
+
+
+                //            }
+                //        }
+                //    }
+            }
+
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                _lMouseDown = false;
+                if (_lastHitCellObject)
+                {
+                    _lastHitCellObject.GhostTransformVisibility(false);
+                    _lastHitCellObject.UnHighlightDestinations();
+                    _lastHitCellObject = null;
+                }
+
+                LineDrawer.Hide();
+
+
+                Time.timeScale = 1f;
+            }
+        }
+
+        public void RayTrace()
+        {
+        }
+
+        private void HandleInputs()
+        {
+            HandleInputsPropper();
+            return;
+
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                _ishit = 0;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                _ishit = 1;
+            }
+
+            //Oh Shit!
+            if (_ishit != -1)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                var lineStartVec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                lineStartVec.y = 10f;
+
+                LineDrawer.UpdatePosition(0, lineStartVec);
+                LineDrawer.UpdatePosition(1, lineStartVec);
+
+
+                RaycastHit rayHit;
+                Physics.Raycast(ray, out rayHit, 400f);
+                if (rayHit.collider)
+                {
+                    var cellObject = rayHit.collider.GetComponent<GameCellObject>();
+                    if (cellObject)
+                    {
+                        if (!cellObject.IsCentre)
+                        {
+                            _lastHitCellObject = cellObject;
+                            cellObject.GhostTransformVisibility(true);
                             Time.timeScale = .5f;
                         }
                         else
@@ -114,13 +221,14 @@ namespace Assets.Scripts
                     {
                         _lastHitCellObject.CheckBackward();
                     }
+
+                    _lastHitCellObject.GhostTransformVisibility(false);
                 }
 
                 Time.timeScale = 1;
                 _lastHitCellObject = null;
-
-
                 _ishit = -1;
+                LineDrawer.Hide();
             }
         }
 
