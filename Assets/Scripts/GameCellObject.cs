@@ -10,9 +10,10 @@ namespace Assets.Scripts
         public TextMesh InnerTextMesh;
         private Transform _transform;
         public SourceObject Parent;
+        public Transform GhostTransform;
+        public ColorData ColorData;
         public bool IsCentre = false;
         public int CellValue = 0;
-        public Transform GhostTransform;
 
         private List<GameCellObject> _possibleDestinations = new List<GameCellObject>();
 
@@ -24,7 +25,7 @@ namespace Assets.Scripts
         private void Update()
         {
             HandleRotation();
-            DrawDebugInformation();
+            //DrawDebugInformation();
         }
 
         public void HandleRotation()
@@ -48,19 +49,27 @@ namespace Assets.Scripts
             RayCheck(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9));
         }
 
-        public GameCellObject GetVicinity(int index)
+        public GameCellObject GetVicinity(int index, GameCellObject cell, int mask)
         {
-            return new GameCellObject();
+            var vec = cell.transform.position - Origin;
+            vec.y = 0;
+            vec.Normalize();
+            vec = new Vector3(-vec.z, 0, vec.x);
+
+            if (index == 1)
+                vec *= -1;
+
+            return GetCellAlongRay(new Ray(cell.transform.position, vec), mask, 100f);
         }
 
         public GameCellObject GetCellAtFront()
         {
-            return GetCellAlongRay(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 7));
+            return GetCellAlongRay(new Ray(_transform.position, Origin - _transform.position), 1 << (Parent.RingId + 7), Parent.GetRadius);
         }
 
         public GameCellObject GetCellAtBack()
         {
-            return GetCellAlongRay(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9));
+            return GetCellAlongRay(new Ray(_transform.position, _transform.position - Origin), 1 << (Parent.RingId + 9), Parent.GetRadius);
         }
 
 
@@ -72,20 +81,38 @@ namespace Assets.Scripts
 
             var back = GetCellAtBack();
             if (back)
+            {
                 _possibleDestinations.Add(back);
+
+                var backVRight = GetVicinity(0, back, 1 << (Parent.RingId + 9));
+                var backVLeft = GetVicinity(1, back, 1 << (Parent.RingId + 9));
+
+                if (backVRight)
+                    _possibleDestinations.Add(backVRight);
+                if (backVLeft)
+                    _possibleDestinations.Add(backVLeft);
+            }
+
 
             var front = GetCellAtFront();
             if (front)
+            {
                 _possibleDestinations.Add(front);
 
+                var frontVRight = GetVicinity(0, front, 1 << (Parent.RingId + 7));
+                var frontVLeft = GetVicinity(1, front, 1 << (Parent.RingId + 7));
 
+                if (frontVRight)
+                    _possibleDestinations.Add(frontVRight);
+                if (frontVLeft)
+                    _possibleDestinations.Add(frontVLeft);
+            }
         }
 
 
         public void HighlightDestinations()
         {
             FindDestinations();
-
 
             foreach (var destination in _possibleDestinations)
             {
@@ -130,16 +157,17 @@ namespace Assets.Scripts
             }
         }
 
-        public GameCellObject GetCellAlongRay(Ray ray, int mask)
+        public GameCellObject GetCellAlongRay(Ray ray, int mask, float raduis)
         {
             RaycastHit rayHit;
-            Physics.Raycast(ray, out rayHit, Parent.GetRadius, mask);
+            Physics.Raycast(ray, out rayHit, raduis, mask);
 
             if (rayHit.collider)
             {
                 var otherCell = rayHit.collider.GetComponent<GameCellObject>();
                 if (otherCell)
                 {
+                    otherCell.renderer.material.color = Color.blue;
                     return otherCell;
                 }
             }
