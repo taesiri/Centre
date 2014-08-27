@@ -565,6 +565,14 @@ Prefab:
       propertyPath: LineDrawer
       value: 
       objectReference: {fileID: 2048592752}
+    - target: {fileID: 11400000, guid: 439d1447cd284fa47b85bcb902647a4f, type: 2}
+      propertyPath: Threshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 439d1447cd284fa47b85bcb902647a4f, type: 2}
+      propertyPath: SlowmotionTime
+      value: .75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 439d1447cd284fa47b85bcb902647a4f, type: 2}
   m_RootGameObject: {fileID: 1844657982}
@@ -714,6 +722,11 @@ MonoBehaviour:
     m_PreInfinity: 0
     m_PostInfinity: 0
   LineDrawer: {fileID: 2048592752}
+  IsMouseDown: 0
+  SlowmotionTime: .75
+  Threshold: 20
+  GoalRotation: -1000
+  GoalLayer: -1
 --- !u!4 &1844657984
 Transform:
   m_ObjectHideFlags: 0
@@ -789,9 +802,8 @@ MonoBehaviour:
   Origin: {x: 0, y: 0, z: 0}
   InnerTextMesh: {fileID: 1414633314}
   Parent: {fileID: 0}
-  IsCentre: 1
-  CellValue: 0
   GhostTransform: {fileID: 1427359828}
+  IsCentre: 1
 --- !u!1 &1877480313
 GameObject:
   m_ObjectHideFlags: 0

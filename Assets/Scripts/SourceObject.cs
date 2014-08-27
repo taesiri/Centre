@@ -47,10 +47,6 @@ namespace Assets.Scripts
             ListofCells = new List<GameCellObject>(ObjectCount);
         }
 
-        public int NumberOfFreeCells()
-        {
-            return ListofCells.Count(o => o.IsFree());
-        }
 
         public void ReceiveId(int id)
         {
@@ -96,34 +92,34 @@ namespace Assets.Scripts
 
         public void RespawnRandomValue(int amount)
         {
-            if (amount <= 0)
-                Debug.LogError("Wrong Value! Vairable \'amount\' should be 1 at least!");
+            //if (amount <= 0)
+            //    Debug.LogError("Wrong Value! Vairable \'amount\' should be 1 at least!");
 
-            var listofFrees = ListofCells.Where(o => o.IsFree()).ToList();
-            var n = listofFrees.Count;
+            //var listofFrees = ListofCells.Where(o => o.IsFree()).ToList();
+            //var n = listofFrees.Count;
 
-            _rCounter++;
+            //_rCounter++;
 
-            if (n == 0)
-            {
-                return;
-            }
-            if (n < amount)
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    listofFrees[i].SetValue(GetRandomValue);
-                }
-                return;
-            }
+            //if (n == 0)
+            //{
+            //    return;
+            //}
+            //if (n < amount)
+            //{
+            //    for (int i = 0; i < n; i++)
+            //    {
+            //        listofFrees[i].SetValue(GetRandomValue);
+            //    }
+            //    return;
+            //}
 
 
-            for (int i = 0; i < amount; i++)
-            {
-                // Possible duplication!
-                var index = Centre.Instance.RndGenerator.Next(0, n);
-                listofFrees[index].SetValue(GetRandomValue);
-            }
+            //for (int i = 0; i < amount; i++)
+            //{
+            //    // Possible duplication!
+            //    var index = Centre.Instance.RndGenerator.Next(0, n);
+            //    listofFrees[index].SetValue(GetRandomValue);
+            //}
         }
     }
 }
