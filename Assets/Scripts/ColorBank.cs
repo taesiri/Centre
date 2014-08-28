@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -8,6 +9,7 @@ namespace Assets.Scripts
         public List<Color> PrimitiveColors;
         public List<Color> SecondaryColors;
         public List<Color> CustomColors;
+        public System.Random RndGenerator = new System.Random(DateTime.Now.Millisecond);
 
         public ColorBank()
         {
@@ -83,6 +85,12 @@ namespace Assets.Scripts
             CustomColors.Add(MetallicSilver);
             CustomColors.Add(MetallicGold);
             CustomColors.Add(MetallicCopper);
+        }
+
+
+        public Color GetRandomColor
+        {
+            get { return CustomColors[RndGenerator.Next(0, CustomColors.Count)]; }
         }
 
         #region Colors
