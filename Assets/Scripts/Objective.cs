@@ -6,21 +6,12 @@ namespace Assets.Scripts
 {
     public class Objective : MonoBehaviour
     {
-        public int NumberOfColors = 5;
+        public int NumberOfColors = 2;
         private readonly ColorBank _myBank = new ColorBank();
         public System.Random RndGenerator = new System.Random(DateTime.Now.Millisecond);
 
         public void Start()
         {
-            for (int index = 0; index < _myBank.CustomColors.Count; index++)
-            {
-                var customColor = _myBank.CustomColors[index];
-                var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                cube.transform.localScale = new Vector3(.65f, .65f, .65f);
-                cube.transform.position = new Vector3(-6 + ((index%10)*.85f), .85f*(index/10), 0);
-                cube.renderer.material.color = new Color(customColor.r/255, customColor.g/255, customColor.b/255);
-            }
-
             GenerateNewColor();
         }
 
