@@ -1,26 +1,35 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Cells;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class GameCellObject : MonoBehaviour
     {
+        #region PublicFields
+
+        public bool IsCentre = false;
         public float Speed = 50.0f;
         public Vector3 Origin = Vector3.zero;
         public TextMesh InnerTextMesh;
-        private Transform _transform;
         public SourceObject Parent;
         public Transform GhostTransform;
-        public ColorData ColorData;
-        public bool IsCentre = false;
+        public GameCellBehaviour CellBehaviour;
+
+        #endregion
+
+        #region PrivateFields
+
         private float _rotationDegree;
         private bool _affected;
         private int _layer;
+        private Transform _transform;
+
+        #endregion
 
         public bool AllowToDrop
         {
             get { return GhostTransform.renderer.enabled; }
         }
-
 
         public float CurrentDegree
         {
@@ -31,12 +40,15 @@ namespace Assets.Scripts
         {
             _transform = transform;
             _layer = gameObject.layer;
+
+            CellBehaviour = new AttenuativeCell(this);
         }
 
         private void Update()
         {
             HandleRotation();
 
+            // Ghost Outline Visibilities
             if (Centre.Instance.IsMouseDown)
             {
                 CheckRotationAngle();
@@ -46,6 +58,13 @@ namespace Assets.Scripts
                 GhostTransformVisibility(false);
             }
 
+            // Cell Behaviour Update
+            if (CellBehaviour != null)
+            {
+                CellBehaviour.OnUpdate();
+            }
+
+            //Debug Information
             //DrawDebugInformation();
         }
 
@@ -87,7 +106,6 @@ namespace Assets.Scripts
         {
             Debug.DrawLine(_transform.position, Origin, Color.cyan);
         }
-
 
         public void GhostTransformVisibility(bool value)
         {

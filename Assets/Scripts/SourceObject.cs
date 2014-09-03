@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -39,9 +38,8 @@ namespace Assets.Scripts
 
 
             var trailerObject = (GameObject) Instantiate(TrailerPrefab, transform.position, Quaternion.identity);
-            var trailer = trailerObject.GetComponent<GameCellObject>();
+            var trailer = trailerObject.GetComponent<Trailer>();
             trailer.Speed = Inverted ? -8*Speed : 8*Speed;
-
 
             _waitForDesireFrame = Angle/(ObjectCount*Speed);
             ListofCells = new List<GameCellObject>(ObjectCount);

@@ -120,7 +120,7 @@ namespace Assets.Scripts
                 {
                     if (destinationCell != _lastHitCellObject)
                         if (destinationCell.AllowToDrop)
-                            destinationCell.renderer.material.color = Color.red;
+                            destinationCell.CellBehaviour.CellColorData.ChnageColor(Color.red);
                 }
 
                 Reset();

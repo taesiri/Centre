@@ -932,12 +932,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd92de0db3672514984120e27b3224ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsCentre: 1
   Speed: 0
   Origin: {x: 0, y: 0, z: 0}
   InnerTextMesh: {fileID: 1414633314}
   Parent: {fileID: 0}
   GhostTransform: {fileID: 1427359828}
-  IsCentre: 1
 --- !u!1 &1877480313
 GameObject:
   m_ObjectHideFlags: 0
