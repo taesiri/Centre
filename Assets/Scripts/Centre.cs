@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = System.Random;
 
@@ -120,7 +121,10 @@ namespace Assets.Scripts
                 {
                     if (destinationCell != _lastHitCellObject)
                         if (destinationCell.AllowToDrop)
-                            destinationCell.CellBehaviour.CellColorData.ChnageColor(Color.red);
+                        {
+                            destinationCell.OnDraw(_lastHitCellObject);
+                            _lastHitCellObject.OnLeave();
+                        }
                 }
 
                 Reset();

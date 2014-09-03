@@ -707,6 +707,10 @@ Prefab:
       propertyPath: SlowmotionTime
       value: .75
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 439d1447cd284fa47b85bcb902647a4f, type: 2}
+      propertyPath: ColorRenderer
+      value: 
+      objectReference: {fileID: 1844657985}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 439d1447cd284fa47b85bcb902647a4f, type: 2}
   m_RootGameObject: {fileID: 1844657982}
@@ -938,6 +942,7 @@ MonoBehaviour:
   InnerTextMesh: {fileID: 1414633314}
   Parent: {fileID: 0}
   GhostTransform: {fileID: 1427359828}
+  ColorRenderer: {fileID: 1844657985}
 --- !u!1 &1877480313
 GameObject:
   m_ObjectHideFlags: 0

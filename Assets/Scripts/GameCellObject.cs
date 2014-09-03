@@ -14,6 +14,7 @@ namespace Assets.Scripts
         public SourceObject Parent;
         public Transform GhostTransform;
         public GameCellBehaviour CellBehaviour;
+        public Renderer ColorRenderer;
 
         #endregion
 
@@ -40,8 +41,12 @@ namespace Assets.Scripts
         {
             _transform = transform;
             _layer = gameObject.layer;
+            CellBehaviour = new NormalCell(this);
 
-            CellBehaviour = new AttenuativeCell(this);
+            if (ColorRenderer == null)
+            {
+                Debug.LogWarning("Please Assign ColorRenderer");
+            }
         }
 
         private void Update()
@@ -115,6 +120,27 @@ namespace Assets.Scripts
             {
                 renderer.material.color = Color.red;
             }
+        }
+
+        public void OnDraw(GameCellObject otherCell)
+        {
+            if (CellBehaviour != null)
+            {
+                CellBehaviour.OnDraw(otherCell);
+            }
+        }
+
+        public void OnLeave()
+        {
+            if (CellBehaviour != null)
+            {
+                CellBehaviour.OnLeave();
+            }
+        }
+
+        public Renderer GetColorRenderer()
+        {
+            return ColorRenderer;
         }
     }
 }

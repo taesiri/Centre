@@ -10,6 +10,9 @@
             Owner = owner;
         }
 
+
         public abstract void OnUpdate();
+        public abstract void OnDraw(GameCellObject otherCell);
+        public abstract void OnLeave();
     }
 }
